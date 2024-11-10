@@ -2,6 +2,7 @@ from binary_error_diffusion import binary_error_diffusion_image
 from binary_image import binary_image
 from dithering import dither_image
 from gray_scale import image_to_grayscale
+from colored_error_diffusion import colored_error_diffusion
 import numpy as np
 import cv2
 
@@ -10,18 +11,15 @@ import os
 OUTPUT_FOLDER_NAME = "output"
 
 print("Start of program")
-img = cv2.imread("shaked.jpg")
-
+img = cv2.imread("shaked.jpg", cv2.IMREAD_COLOR)
 grayscaled_img = image_to_grayscale(img)
-dithered_img = dither_image(grayscaled_img)
-binary_img = binary_image(grayscaled_img)
-binary_diffused_img = binary_error_diffusion_image(grayscaled_img)
 
 mappings = {
     'grayscaled': grayscaled_img,
-    'dithered': dithered_img,
-    'binary': binary_img,
-    'binary_diffused': binary_diffused_img
+    'color_diffused': colored_error_diffusion(img),
+    'dithered': dither_image(grayscaled_img),
+    'binary': binary_image(grayscaled_img),
+    'binary_diffused': binary_error_diffusion_image(grayscaled_img)
 }
 for name, img in mappings.items():
     cv2.imshow(name, img)
