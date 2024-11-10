@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import numpy.matlib
 
 def binary_error_diffusion_image(gray_scale: cv2.typing.MatLike):
     h, w = gray_scale.shape[:2]
