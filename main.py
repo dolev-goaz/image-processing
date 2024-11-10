@@ -26,7 +26,8 @@ mappings = {
 for name, img in mappings.items():
     cv2.imshow(name, img)
 
-os.mkdir(OUTPUT_FOLDER_NAME)
+if not os.path.exists(OUTPUT_FOLDER_NAME):
+    os.mkdir(OUTPUT_FOLDER_NAME)
 for name, img in mappings.items():
     cv2.imwrite(f"{OUTPUT_FOLDER_NAME}/{name}.png", img)
 
