@@ -1,9 +1,15 @@
 import cv2
 import numpy as np
 
-def generate_colors_bgr():
+def generate_colors_bgr(amount: int = None, random=True):
     # FORMAT: BGR
-    return np.asarray([[255,0,0], [0,255,0], [0,0,255], [0,0,0], [255,255,255]])
+    if not random:
+        # blue, green, red, yellow, white, black
+        return np.asarray([[255,0,0], [0,255,0], [0,0,255], [0,255,255], [0,0,0], [255,255,255]])
+    
+    if not amount:
+        amount = np.random.randint(5, 10)
+    return np.random.randint(0, 256, (amount, 3)) # 3 components, 0-255
 
 def find_closest_color(color: np.ndarray[np.uint8], colors: np.ndarray[np.uint8]):
     distances = np.linalg.norm(colors - color, axis=1)
@@ -31,5 +37,6 @@ def colored_error_diffusion(image: cv2.typing.MatLike, colors: np.ndarray[any] =
                 
             if y + 1 < h and x + 1 < w:
                 errors[y + 1, x + 1] += 1/8 * diff
-                
+    
+    print(f"Colors used: {colors}")
     return out
