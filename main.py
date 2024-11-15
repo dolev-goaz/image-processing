@@ -7,33 +7,29 @@ import cv2
 
 import cv_utils
 
-import os
-
 OUTPUT_FOLDER_NAME = "output"
 
 print("Start of program")
-img = cv2.imread("shaked.jpg", cv2.IMREAD_COLOR)
+img = cv2.imread("Lenna.png", cv2.IMREAD_COLOR)
 grayscaled_img = image_to_grayscale(img)
 
 mappings = {
-    # 'grayscaled': grayscaled_img,
-    'color_diffused': colored_error_diffusion(img),
+    'original': img,
+    'color diffused': colored_error_diffusion(img),
+    'gray scaled': grayscaled_img,
     # 'dithered': dither_image(grayscaled_img),
     # 'binary': binary_image(grayscaled_img),
-    # 'binary_diffused': binary_error_diffusion_image(grayscaled_img)
+    'binary diffused': binary_error_diffusion_image(grayscaled_img)
 }
 
-cv_utils.display_images(images=[img, grayscaled_img, mappings['color_diffused']], titles=['Source', 'GrayScaled', 'Diffused'])
+cv_utils.display_images(images=mappings.values(), titles=mappings.keys())
 
 
 for name, img in mappings.items():
-    cv2.imshow(name, img)
-
-
-# if not os.path.exists(OUTPUT_FOLDER_NAME):
-#     os.mkdir(OUTPUT_FOLDER_NAME)
-# for name, img in mappings.items():
-#     cv2.imwrite(f"{OUTPUT_FOLDER_NAME}/{name}.png", img)
+    if name == 'original':
+        continue
+    file_name = f"{OUTPUT_FOLDER_NAME}/{name}.png"
+    cv_utils.save_image(img, file_name)
 
 
 cv2.waitKey(0)
