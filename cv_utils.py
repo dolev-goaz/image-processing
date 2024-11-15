@@ -24,18 +24,18 @@ def display_images(images: list[cv2.typing.MatLike], titles: list[str], window_n
     # Calculate total width and create a canvas
     total_width = sum(img.shape[1] for img in resized_images) + padding * (len(images) - 1)
     canvas_height = target_height + title_height
-    canvas = np.zeros((canvas_height, total_width, 3), dtype=np.uint8)
+    canvas = np.ones((canvas_height, total_width, 3), dtype=np.uint8) * 255 # white background
 
     current_x = 0
     for img, title in zip(resized_images, titles):
-        # Place the image
+        # image
         canvas[title_height:canvas_height, current_x:current_x + img.shape[1]] = img
 
-        # Place the title
+        # title
         text_size = cv2.getTextSize(title, cv2.FONT_HERSHEY_COMPLEX, 0.6, 1)[0]
         text_x = current_x + (img.shape[1] - text_size[0]) // 2
         text_y = (title_height + text_size[1]) // 2
-        cv2.putText(canvas, title, (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX, 0.6, (255, 255, 255), 1)
+        cv2.putText(canvas, title, (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 0, 0), 1) # black
 
         current_x += img.shape[1] + padding
 
