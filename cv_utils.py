@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def display_images(images, titles, window_name="image display"):
+def display_images(images: list[cv2.typing.MatLike], titles: list[str], window_name="image display"):
     if len(images) != len(titles):
         raise ValueError("mismatch between images and titles")
 
