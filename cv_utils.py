@@ -41,5 +41,3 @@ def display_images(images: list[cv2.typing.MatLike], titles: list[str], window_n
 
     # Display the final canvas
     cv2.imshow(window_name, canvas)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
