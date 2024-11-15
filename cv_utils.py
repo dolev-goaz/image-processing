@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+import os
 
-def display_images(images: list[cv2.typing.MatLike], titles: list[str], window_name="image display"):
+def create_image_display(images: list[cv2.typing.MatLike], titles: list[str]):
     if len(images) != len(titles):
         raise ValueError("mismatch between images and titles")
 
@@ -39,5 +41,27 @@ def display_images(images: list[cv2.typing.MatLike], titles: list[str], window_n
 
         current_x += img.shape[1] + padding
 
-    # Display the final canvas
+    return canvas
+    
+
+def display_images(images: list[cv2.typing.MatLike], titles: list[str], window_name="image display"):
+    canvas = create_image_display(images, titles)
     cv2.imshow(window_name, canvas)
+    return canvas
+
+def display_images_notebook(images: list[cv2.typing.MatLike], titles: list[str]):
+    canvas = create_image_display(images, titles)
+    out_image = cv2.cvtColor(canvas, cv2.COLOR_BGR2RGB)
+    
+    plt.imshow(out_image)
+    plt.axis('off')  # remove graph styling
+    plt.gca().set_position([0, 0, 1, 1])  # remove padding
+    plt.show()
+
+def save_image(image: cv2.typing.MatLike, path: str):
+    directory = os.path.dirname(path)
+
+    if directory and not os.path.exists(directory):
+        os.makedirs(directory)
+
+    cv2.imwrite(path, image)
