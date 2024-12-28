@@ -23,7 +23,7 @@ def zoom_image_fourier(image, zoom_factor):
     
     # Step 3: Inverse Fourier Transform
     f_ishifted = ifftshift(padded_f_shifted)
-    zoomed_image = np.abs(ifft2(f_ishifted))
+    zoomed_image = np.abs(ifft2(f_ishifted)) # extract magnitudes
     
     # Step 4: Normalizing the resulting image
     zoomed_image -= zoomed_image.min()
